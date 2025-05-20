@@ -52,6 +52,7 @@ OBJS += opamp_common_all.o opamp_common_v2.o
 OBJS += pwr.o
 OBJS += rcc.o rcc_common_all.o
 OBJS += rng_common_v1.o
+OBJS += rtc_common_all.o rtc_common_g04.o
 OBJS += spi_common_all.o spi_common_v2.o
 OBJS += timer_common_all.o timer_common_f0234.o
 OBJS += quadspi_common_v1.o

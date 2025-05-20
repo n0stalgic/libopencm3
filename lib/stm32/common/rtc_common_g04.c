@@ -40,9 +40,9 @@ void rtc_wait_for_synchro(void)
 	RTC_WPR = 0xca;
 	RTC_WPR = 0x53;
 
-	RTC_ISR &= ~(RTC_ISR_RSF);
+	RTC_ICSR &= ~(RTC_ICSR_RSF);
 
-	while (!(RTC_ISR & RTC_ISR_RSF));
+	while (!(RTC_ICSR & RTC_ICSR_RSF));
 
 	/* disable write protection again */
 	RTC_WPR = 0xff;
@@ -65,7 +65,7 @@ void rtc_set_wakeup_time(uint16_t wkup_time, uint8_t rtc_cr_wucksel)
 	 *    It takes around 2 RTCCLK clock cycles (due to clock
 	 *    synchronization).
 	 */
-	while (!((RTC_ISR) & (RTC_ISR_WUTWF)));
+	while (!((RTC_ICSR) & (RTC_ICSR_WUTWF)));
 	/* 3. Program the wakeup auto-reload value WUT[15:0], and the wakeup
 	 *    clock selection (WUCKSEL[2:0] bits in RTC_CR).Set WUTE in RTC_CR
 	 *    to enable the timer again. The wakeup timer restarts
@@ -78,23 +78,13 @@ void rtc_set_wakeup_time(uint16_t wkup_time, uint8_t rtc_cr_wucksel)
 }
 
 /*---------------------------------------------------------------------------*/
-/** @brief Clears the wakeup flag
-
-@details This function should be called first in the rtc_wkup_isr()
-*/
-void rtc_clear_wakeup_flag(void)
-{
-	RTC_ISR &= ~RTC_ISR_WUTF;
-}
-
-/*---------------------------------------------------------------------------*/
 /** @brief Sets the initialization flag
 
 @details Requires unlocking backup domain write protection (PWR_CR_DBP)
 */
 void rtc_set_init_flag(void)
 {
-	RTC_ISR |= RTC_ISR_INIT;
+	RTC_ICSR |= RTC_ICSR_INIT;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -104,7 +94,7 @@ void rtc_set_init_flag(void)
 */
 void rtc_clear_init_flag(void)
 {
-	RTC_ISR &= ~RTC_ISR_INIT;
+	RTC_ICSR &= ~RTC_ICSR_INIT;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -114,6 +104,5 @@ void rtc_clear_init_flag(void)
 */
 bool rtc_init_flag_is_ready(void)
 {
-	return (RTC_ISR & RTC_ISR_INITF);
+	return (RTC_ICSR & RTC_ICSR_INITF);
 }
-
