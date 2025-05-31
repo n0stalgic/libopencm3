@@ -106,3 +106,63 @@ bool rtc_init_flag_is_ready(void)
 {
 	return (RTC_ICSR & RTC_ICSR_INITF);
 }
+
+/*---------------------------------------------------------------------------*/
+/** @brief Clears wakeup timer interrupt
+
+@details Requires unlocking backup domain write protection (PWR_CR_DBP)
+*/
+void rtc_clear_wakeup_interrupt(void)
+{
+	RTC_SCR |= RTC_SCR_CWUTF;
+}
+
+/*---------------------------------------------------------------------------*/
+/** @brief Enable wakeup timer interrupt
+
+@details Requires unlocking backup domain write protection (PWR_CR_DBP)
+*/
+void rtc_enable_wakeup_timer_interrupt(void)
+{
+	RTC_CR |= RTC_CR_WUTIE;
+}
+
+/*---------------------------------------------------------------------------*/
+/** @brief Disable wakeup timer interrupt
+
+@details Requires unlocking backup domain write protection (PWR_CR_DBP)
+*/
+void rtc_disable_wakeup_timer_interrupt(void)
+{
+	RTC_CR &= ~(RTC_CR_WUTIE);
+}
+
+/*---------------------------------------------------------------------------*/
+/** @brief Enable auto-reloading wakeup timer
+
+@details Requires unlocking backup domain write protection (PWR_CR_DBP)
+*/
+void rtc_enable_wakeup_timer(void)
+{
+	RTC_CR |= RTC_CR_WUTE;
+}
+
+/*---------------------------------------------------------------------------*/
+/** @brief Disable auto-reloading wakeup timer
+
+@details Requires unlocking backup domain write protection (PWR_CR_DBP)
+*/
+void rtc_disable_wakeup_timer(void)
+{
+	RTC_CR &= ~RTC_CR_WUTE;
+}
+
+/*---------------------------------------------------------------------------*/
+/** @brief Wait for wakeup timer IRQ to clear in the RTC_SR register
+
+@details Requires unlocking backup domain write protection (PWR_CR_DBP)
+*/
+void rtc_wait_for_wakeup_timer_irq_clear(void)
+{
+	while ((RTC_SR & RTC_SR_WUTF) != 0);
+}

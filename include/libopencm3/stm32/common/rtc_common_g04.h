@@ -299,7 +299,6 @@ specific memorymap.h header before including this header file.*/
 
 BEGIN_DECLS
 
-
 END_DECLS
 /**@}*/
 

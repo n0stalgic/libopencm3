@@ -197,6 +197,12 @@ void rtc_time_set_hour(uint8_t hour, bool use_am_notation);
 void rtc_time_set_minute(uint8_t minute);
 void rtc_time_set_second(uint8_t second);
 void rtc_time_set_time(uint8_t hour, uint8_t minute, uint8_t second, bool use_am_notation);
+void rtc_clear_wakeup_interrupt(void);
+void rtc_enable_wakeup_timer_interrupt(void);
+void rtc_disable_wakeup_timer_interrupt(void);
+void rtc_enable_wakeup_timer(void);
+void rtc_disable_wakeup_timer(void);
+void rtc_wait_for_wakeup_timer_irq_clear(void);
 
 END_DECLS
 /**@}*/
